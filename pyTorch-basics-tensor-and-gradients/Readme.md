@@ -1,5 +1,5 @@
-This is a notebook to practice, credits to 
-Project: pyTorch Basics 
-https://jovian.ai/aakashns/01-pytorch-basics
-aakashns@jovian.ai
-https://www.jovian.ml
+This is a notebook to practice, credits to<br>
+Project: pyTorch Basics<br>
+https://jovian.ai/aakashns/01-pytorch-basics<br>
+aakashns@jovian.ai<br>
+https://www.jovian.ml<br>
