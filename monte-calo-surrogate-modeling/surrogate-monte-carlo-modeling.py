@@ -1,4 +1,4 @@
-# todo: write modular code
+import tensorflow as tf
 
 import logging
 import os
@@ -15,13 +15,11 @@ import pyro.distributions as dist
 
 from pyro.infer import MCMC, NUTS
 
-import tensorflow as tf
-
-# 1.0. Load Data
+# 1. Load Data
 df = pd.read_csv('Binance_1INCHBTC_d.csv', skiprows=1)
 df.head()
 
-# 1.1. Load the data 
+# 1. Load the data 
 close_prices = df['Close'].values
 close_prices[0:10]
 
@@ -30,6 +28,7 @@ window_size = 10
 sequences = [close_prices[i: i + window_size] for i in range(len(close_prices) - window_size + 1)]
 
 # 3. Markov Chain using Pyro
+
 def markov_model(data):
     mu = pyro.sample('mu', dist.Normal(0, 10))
     sigma = pyro.sample('sigma', dist.HalfNormal(10))
@@ -52,6 +51,7 @@ X = [seq[:9] for seq in sequences]
 y = [predict_next_value(seq) for seq in sequences]
 
 # 5. Surrogate modeling using Neural Network
+
 model = tf.keras.Sequential([
     tf.keras.layers.Dense(32, activation='relu', input_shape=(9,)),
     tf.keras.layers.Dense(16, activation='relu'),
@@ -62,6 +62,7 @@ model.compile(optimizer='adam', loss='mse')
 model.fit(np.array(X), np.array(y), epochs=50, batch_size=32)
 
 # 6. Evaluate the model
+
 # Splitting data into train and test
 split_idx = int(0.8 * len(X))
 X_train, X_test = X[:split_idx], X[split_idx:]
